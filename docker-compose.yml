@@ -1,16 +1,19 @@
-version: "3"
+version: "3.8"
 services:
   db:
     image: postgres
+    # container_name: postgres_container
     restart: always
     environment:
       - POSTGRES_USER=postgres_user
       - POSTGRES_PASSWORD=postgres_pass
-      - POSTGRES_DB=postgres_super_db
+      # this is causing problmes for some reason
+      # - POSTGRES_DB=postgres_super_db 
     ports:
       - '5432:5432'
     volumes: 
-      - db:/var/lib/postgresql/data
+      - postgres_vol:/var/lib/postgresql/data
+      - ./quotes.sql:/docker-entrypoint-initdb.d/quotes.sql
 volumes:
-  db:
+  postgres_vol:
     driver: local
