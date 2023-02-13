@@ -3,21 +3,20 @@ import psycopg2
 import time
 import datetime as dt
 
+print('\nWaiting for the Postgres to start\n')
+time.sleep(5)
+
+#establishing the connection
+conn = psycopg2.connect(
+    database="postgres_super_db", 
+    user='postgres_user', 
+    password='postgres_pass', 
+    host='db', 
+    port= '5432'
+)
 
 
 if __name__ == '__main__':
-
-    print('\nWaiting for the Postgres to start\n')
-    # time.sleep(5)
-
-    #establishing the connection
-    conn = psycopg2.connect(
-        database="postgres_super_db", 
-        user='postgres_user', 
-        password='postgres_pass', 
-        host='localhost', 
-        port= '5432'
-    )
 
     #Creating a cursor object using the cursor() method
     print('\nCreating a cursor object using the cursor() method')
@@ -59,21 +58,21 @@ if __name__ == '__main__':
     cursor.execute(sql_query, (3, ))
     print(cursor.fetchall())
 
-    sql_query = "SELECT * FROM customers where customer_date < %s;"
+    sql_query = "SELECT * FROM customers where (customer_date < %s);"
     print(sql_query)
     cursor.execute(sql_query, (date_2, ))
     print(cursor.fetchall())
 
-    sql_query = "DELETE FROM customers where customer_date < %s;"
+    sql_query = "DELETE FROM customers where (customer_date > %s);"
     print(sql_query)
     cursor.execute(sql_query, (date_2, ))
-    # print(cursor.fetchall())
     conn.commit()
 
     sql_query = f"SELECT * FROM customers;"
     print(sql_query)
     cursor.execute(sql_query)
     print(cursor.fetchall())
+    print(f'\nRow count: {cursor.rowcount}\n')
     
 
     #Closing the connection
