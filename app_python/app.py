@@ -15,6 +15,44 @@ conn = psycopg2.connect(
     port= '5432'
 )
 
+def select_all():
+    sql_query = f"SELECT * FROM customers;"
+    print(sql_query)
+    cursor.execute(sql_query)
+    # print(cursor.fetchall())
+    sql_rows = cursor.fetchall()
+    print_rows(sql_rows)
+
+    print(f'\nRow count: {cursor.rowcount}\n')
+
+def print_rows(rows):
+    for row in rows:
+        print(row)
+
+def delete_older_dates():
+    date_2 = dt.date(2023, 2, 23)
+    sql_query = "DELETE FROM customers where (customer_date > %s);"
+    print(sql_query)
+    cursor.execute(sql_query, (date_2, ))
+    conn.commit()
+
+def select_condition():
+    date_2 = dt.date(2023, 2, 23)
+    sql_query = "SELECT * FROM customers where customer_id < 3;"
+    print(sql_query)
+    cursor.execute(sql_query)
+    sql_rows = cursor.fetchall()
+    print_rows(sql_rows)
+
+    sql_query = "SELECT * FROM customers where customer_id < %s;"
+    print(sql_query)
+    cursor.execute(sql_query, (3, ))
+    print_rows(sql_rows)
+
+    sql_query = "SELECT * FROM customers where (customer_date < %s);"
+    print(sql_query)
+    cursor.execute(sql_query, (date_2, ))
+    print_rows(sql_rows)
 
 if __name__ == '__main__':
 
@@ -29,50 +67,15 @@ if __name__ == '__main__':
     # Fetch a single row using fetchone() method.
     data = cursor.fetchone()
     print(f"\nConnection established to: {data}\n")
+    
 
-    date_limit = '2023-02-23'
-    date_2 = dt.date(2023, 2, 23)
-    # # sql_query = f"SELECT * FROM customers where customer_date<'{date_limit}'"
-    # sql_query = f"DELETE FROM customers where customer_date<'{date_limit}'"
-    # print(sql_query)
-    # cursor.execute(sql_query)
-    # conn.commit()
-    # sql_query = f"SELECT FROM customers where customer_date<'{date_limit}'"
+    select_all()
 
-    sql_query = f"SELECT * FROM customers;"
-    print(sql_query)
-    cursor.execute(sql_query)
-    print(cursor.fetchall())
+    select_condition()
 
-    print(f'\nRow count: {cursor.rowcount}\n')
+    delete_older_dates()
 
-    # sql_query = f"SELECT * FROM customers"
-    sql_query = "SELECT * FROM customers where customer_id < 3;"
-    print(sql_query)
-    cursor.execute(sql_query)
-    print(cursor.fetchall())
-    # print(type(cursor.fetchall()))
-
-    sql_query = "SELECT * FROM customers where customer_id < %s;"
-    print(sql_query)
-    cursor.execute(sql_query, (3, ))
-    print(cursor.fetchall())
-
-    sql_query = "SELECT * FROM customers where (customer_date < %s);"
-    print(sql_query)
-    cursor.execute(sql_query, (date_2, ))
-    print(cursor.fetchall())
-
-    sql_query = "DELETE FROM customers where (customer_date > %s);"
-    print(sql_query)
-    cursor.execute(sql_query, (date_2, ))
-    conn.commit()
-
-    sql_query = f"SELECT * FROM customers;"
-    print(sql_query)
-    cursor.execute(sql_query)
-    print(cursor.fetchall())
-    print(f'\nRow count: {cursor.rowcount}\n')
+    select_all()
     
 
     #Closing the connection
