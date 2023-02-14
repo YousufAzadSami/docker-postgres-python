@@ -1,4 +1,5 @@
 FROM python:latest
+# these ENV variables are here to make sure the python console output is visible in the terminal
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 WORKDIR /code
