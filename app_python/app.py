@@ -3,8 +3,9 @@ import psycopg2
 import time
 import datetime as dt
 
-print('\nWaiting for the Postgres to start\n')
+print('\nManually waiting 5s (via time.sleep()) for the Postgres to start. Not the best solution, but it will do for now.\n')
 time.sleep(5)
+
 
 #establishing the connection
 conn = psycopg2.connect(
@@ -14,12 +15,14 @@ conn = psycopg2.connect(
     host='db', 
     port= '5432'
 )
+#Creating a cursor object using the cursor() method
+cursor = conn.cursor()
 
 def select_all():
+    print(f'\nSelecting and printing all rows from the table "customers"\n')
     sql_query = f"SELECT * FROM customers;"
-    print(sql_query)
+    # print(sql_query)
     cursor.execute(sql_query)
-    # print(cursor.fetchall())
     sql_rows = cursor.fetchall()
     print_rows(sql_rows)
 
@@ -29,11 +32,11 @@ def print_rows(rows):
     for row in rows:
         print(row)
 
-def delete_older_dates():
-    date_2 = dt.date(2023, 2, 23)
-    sql_query = "DELETE FROM customers where (customer_date > %s);"
-    print(sql_query)
-    cursor.execute(sql_query, (date_2, ))
+def delete_older_dates(date_threshold = dt.date(2023, 2, 23)):
+    print(f'\nDeleting records that are older than {date_threshold}')
+    sql_query = "DELETE FROM customers where (customer_date < %s);"
+    # print(sql_query)
+    cursor.execute(sql_query, (date_threshold, ))
     conn.commit()
 
 def select_condition():
@@ -54,24 +57,14 @@ def select_condition():
     cursor.execute(sql_query, (date_2, ))
     print_rows(sql_rows)
 
+def connection_related_stuff():
+    pass
+
 if __name__ == '__main__':
-
-    #Creating a cursor object using the cursor() method
-    print('\nCreating a cursor object using the cursor() method')
-
-    cursor = conn.cursor()
-
-    #Executing an MYSQL function using the execute() method
-    cursor.execute("select version()")
-
-    # Fetch a single row using fetchone() method.
-    data = cursor.fetchone()
-    print(f"\nConnection established to: {data}\n")
-    
 
     select_all()
 
-    select_condition()
+    # select_condition()
 
     delete_older_dates()
 
