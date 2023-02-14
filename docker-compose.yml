@@ -7,7 +7,6 @@ services:
     environment:
       - POSTGRES_USER=postgres_user
       - POSTGRES_PASSWORD=postgres_pass
-      # this is causing problmes for some reason. Not always ¯\_(ツ)_/¯
       - POSTGRES_DB=postgres_super_db 
     ports:
       - '5432:5432'
