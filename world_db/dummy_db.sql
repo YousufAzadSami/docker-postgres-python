@@ -11,4 +11,3 @@ INSERT INTO customers (customer_id, customer_name, customer_date) VALUES
 (3, 'Dacathlon Shop', '2023-02-23'),
 (4, 'New WG', '2023-02-24'),
 (5, 'Berling Wohnung', '2023-02-25');
-
