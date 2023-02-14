@@ -13,7 +13,7 @@ services:
       - postgres_vol:/var/lib/postgresql/data
       - ./customers.sql:/docker-entrypoint-initdb.d/customers.sql
   python_app:
-    build: ./app_python/
+    build: ./python_stuff/
 volumes:
   postgres_vol:
     driver: local
