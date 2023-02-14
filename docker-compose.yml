@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 services:
   db:
     image: postgres
@@ -12,9 +12,7 @@ services:
       - '5432:5432'
     volumes: 
       - postgres_vol:/var/lib/postgresql/data
-      # - ./quotes.sql:/docker-entrypoint-initdb.d/quotes.sql
-      # - ./dummy_db.sql:/docker-entrypoint-initdb.d/dummy_db.sql
-      - ./world_db:/docker-entrypoint-initdb.d
+      - ./customers.sql:/docker-entrypoint-initdb.d/customers.sql
   python_app:
     build: ./app_python/
 volumes:
