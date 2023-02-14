@@ -1,5 +1,5 @@
 # What is this project?
-This project demonstrates how data from a Postgres container can be accessed+CRUD operations can be run from another container using python. This was done as an interview task. This is meant to be a barebone minimal project, i.e. the codes here are kept simple and are for experimental purpose. In no shape or form, they are production-ready code. 
+This project demonstrates how data from a Postgres container can be accessed(e.g. CRUD operations can be run) from another container using python. This was done as an interview task. This is meant to be a barebone minimal project, i.e. the codes here are kept simple and are for experimental purpose. In no shape or form, they are production-ready code. 
 
 Container 1: Postgres container (preloaded with data using .sql files)  
 Container 2: Python container (accesses data from the first container)
@@ -19,4 +19,5 @@ Prerequisites: Docker needs to be installed in the local machine
 
 This project was made in a hurry, needless to say there are many rooms for improvents. Some of them are - 
 - Instead of manually waiting for the Postgres container to start, find some alternative solution. 
+- Genarate data automatically. It is part of the task description. Right now, it is done manually via .sql file. 
 - Use `sqlachemy` instead of `psycopg2`. The reason being, `sqlalchemy` offers much more pythonic way of handling sql queries instead of handling raw sql queries, which can get more difficult to manange as the query gets more complicated. 
