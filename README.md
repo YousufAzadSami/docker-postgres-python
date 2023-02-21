@@ -1,8 +1,8 @@
 # What is this project?
 This project demonstrates how data from a Postgres container can be accessed(e.g. CRUD operations can be run) from another container using python. This was done as an interview task. This is meant to be a barebone minimal project, i.e. the codes here are kept simple and are for experimental purpose. In no shape or form, they are production-ready code. 
 
-Container 1: Postgres container (preloaded with data using .sql files)  
-Container 2: Python container (accesses data from the first container)
+- Container 1: Postgres container (preloaded with data using .sql files)  
+- Container 2: Python container (accesses data from the first container)
 
 # How to run this project 
 Prerequisites: Docker needs to be installed in the local machine 
