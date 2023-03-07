@@ -54,39 +54,36 @@ if __name__ == '__main__':
     wait_a_while()
 
     # for the sake of simplicity, I am putting the whole connection and sql query part in the inside of try
-    try:
-        #establishing the connection
-        conn = psycopg2.connect(
-            database="postgres_super_db", 
-            user='postgres_user', 
-            password='postgres_pass', 
-            host='db', 
-            port= '5432'
-        )
-        #Creating a cursor object using the cursor() method
-        cursor = conn.cursor()
-        cursor.execute('SELECT version()')
-        print(f'Connection established to {cursor.fetchone()}')
-        print(f'\nThe Postgres container is preloaded with a "customers" table in the "postgres_super_db" database from customers.sql file. It has 5 records\n')
 
-        # select and print everything from the 'customer' table in the database
-        select_all(cursor)
+    #establishing the connection
+    conn = psycopg2.connect(
+        database="postgres_super_db", 
+        user='postgres_user', 
+        password='postgres_pass', 
+        host='db', 
+        port= '5432'
+    )
+    #Creating a cursor object using the cursor() method
+    cursor = conn.cursor()
+    cursor.execute('SELECT version()')
+    print(f'Connection established to {cursor.fetchone()}')
+    print(f'\nThe Postgres container is preloaded with a "customers" table in the "postgres_super_db" database from customers.sql file. It has 5 records\n')
 
-        # select and print some stuff depending on the condition from the 'customer' table in the database
-        # select_condition(cursor)
+    # select and print everything from the 'customer' table in the database
+    select_all(cursor)
 
-        # delete all the records that are older than a certain date
-        delete_older_dates(cursor)
-        # or
-        # delete_older_dates(cursor, dt.date(2023, 2, 24))
+    # select and print some stuff depending on the condition from the 'customer' table in the database
+    # select_condition(cursor)
 
-        # select and print everything from the 'customer' table in the database
-        select_all(cursor)
-        
+    # delete all the records that are older than a certain date
+    delete_older_dates(cursor)
+    # or
+    # delete_older_dates(cursor, dt.date(2023, 2, 24))
 
-        #Closing the connection
-        print('closing the connection')
-        conn.close()
+    # select and print everything from the 'customer' table in the database
+    select_all(cursor)
     
-    except:
-        print('Something went wrong. Following the print statements will give us a clue')
+
+    #Closing the connection
+    print('closing the connection')
+    conn.close()
